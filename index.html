@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szukanie liczb pierwszych</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <section class="form-section">
+        <div class="form-box">
+            <form name="primesForm">
+                <label for="numPrimes">Ile liczb pierwszych znaleźć?</label>
+                <input
+                    type="number"
+                    class="input-number"
+                    id="numPrimes"
+                    min="1"
+                    required
+                    name="numPrimes"
+                />
+                <input type="submit" class="input-submit" value="Szukaj!" />
+            </form>
+        </div>
+        <p class="progressText"></p>
+        <div class="output"></div>  
+  </section>
+  <script>
+    let output = document.querySelector('.output');
+    let inputSubmit = document.querySelector('.input-submit');
+    let progressText = document.querySelector('.progressText');
+    let isProcessing = false;
+
+    document.forms['primesForm'].addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (isProcessing) {
+            return;
+      }
+
+      output.classList.add('output-style');
+      inputSubmit.disabled = true;
+      progressText.innerHTML = '';
+      output.innerHTML = '';
+      isProcessing = true;
+
+      let numberPrimes = parseInt(document.querySelector('.input-number').value, 10);
+      let primesWorker = new Worker('main.js');
+
+      primesWorker.postMessage(numberPrimes);
+
+      primesWorker.onmessage = function (e) {
+        if (e.data.progress !== undefined) {
+          progressText.textContent = `Przetwarzanie... ${e.data.progress.toFixed(2)}%`;
+          if (e.data.progress === 100) {
+            output.innerHTML = `${e.data.result.join(', ')}`;
+            inputSubmit.disabled = false;
+            isProcessing = false;
+          }
+        }
+      };
+    });
+  </script>
+</body>
+</html>

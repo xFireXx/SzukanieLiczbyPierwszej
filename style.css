@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url('large-triangles.svg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.form-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.form-box {
+    background-color: aliceblue;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+label,
+input {
+    margin-bottom: 20px;
+}
+
+.input-submit {
+    border: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #07abec;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.input-submit:hover {
+    background-color: #1abeff;
+}
+
+.input-number {
+    border: 1px solid #000;
+    padding: 10px;
+}
+
+.input-number:focus-visible {
+    outline: 0;
+}
+
+.output-style {
+    margin: 20px;
+    background-color: aliceblue;
+    padding: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+}
